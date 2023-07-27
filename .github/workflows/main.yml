@@ -1,15 +1,15 @@
 name: Test fastapi and nginx smoke tests
 
-on: 
+on:
   push:
     branches:
       - main
     paths:
-      - ".github/workflows/main.yml"
-      - "./fastapi/*"
-      - "./nginx/*"
-  
-jobs: 
+      - '.github/workflows/main.yml'
+      - './fastapi/*'
+      - './nginx/*'
+
+jobs:
   docker:
     name: Docker FastAPI
     runs-on: ubuntu-latest
@@ -22,14 +22,22 @@ jobs:
 
       - name: Curl request to nginx
         run: |
-          curl -s -o /dev/null -w "%{http_code}" -X GET --insecure "http://localhost:9000/" && docker logs nginx && docker logs fastapi    
+          curl -s -o /dev/null -w "%{http_code}" -X GET --insecure "http://localhost:9000/" && docker logs nginx && docker logs fastapi
 
-      - name: Run smoke test
+      - name: Test that the application is running
         run: |
           cd ./fastapi && chmod +x smoke-test.sh && ./smoke-test.sh
- 
+
+      - name: Test to insert users
+        run: |
+          cd ./fastapi && chmod +x insert-users.sh && ./insert-users.sh
+
+      - name: Test to get users
+        run: |
+          cd ./fastapi && chmod +x get-users.sh && ./get-users.sh
+
       - name: Tear Down Docker Compose Stack
         run: |
           docker-compose down
 
-# Run me 
+# Run me
