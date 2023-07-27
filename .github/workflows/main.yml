@@ -26,7 +26,7 @@ jobs:
 
       - name: Run smoke test
         run: |
-          cd ./fastapi && chmod +x smoke-test.sh && ./smoke_test.sh
+          cd ./fastapi && chmod +x smoke-test.sh && ./smoke-test.sh
  
       - name: Tear Down Docker Compose Stack
         run: |
