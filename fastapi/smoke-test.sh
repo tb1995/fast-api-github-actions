@@ -23,7 +23,7 @@ echo "Container running on Port: $container_port"
 
 # hit the task status endpoint, as it returns a 200 status code regardless of ID
 # response=$(wget --server-response --method=GET --no-check-certificate "http://localhost:9000/api/v1/imports/1" 2>&1)
-response=$(curl -s -o /dev/null -w "%{http_code}" -X GET --insecure "http://localhost:9000/")
+response=$(curl -s -o /dev/null -w "%{http_code}" -X GET --insecure "http://localhost:9000/test/setup")
 
 echo "Response code: $response"
 if [ "$response" -eq 200 ]; then

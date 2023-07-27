@@ -10,8 +10,15 @@ class User(BaseModel):
     name: str
 
 
-@app.get("/")
+@app.get("/test/setup")
 def read_root():
+    cur = db_conn.cursor()
+    cur.execute("DROP TABLE IF EXISTS users;")
+
+    cur.execute("""CREATE TABLE users (
+    id SERIAL PRIMARY KEY,
+    name TEXT NOT NULL
+    );""")
     return {"Hello": "World"}
 
 
@@ -21,9 +28,9 @@ def create_users(user: User):
     user_name = user.name
 
     cur = db_conn.cursor()
-    insert_user_query = f"""
-    
-"""
+
+    db_conn.commit()
+
     cur.execute(
         "INSERT INTO users (name) VALUES (%s) RETURNING id", (user_name,))
     user_id = cur.fetchone()[0]
