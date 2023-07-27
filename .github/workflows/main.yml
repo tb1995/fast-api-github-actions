@@ -19,7 +19,11 @@ jobs:
       - name: Run the docker-compose stack
         run: |
           docker-compose up -d && sleep 2 && docker ps
-         
+
+      - name: Curl request to nginx
+        run: |
+          curl -s -o /dev/null -w "%{http_code}" -X GET --insecure "http://localhost:9000/" && docker logs nginx && docker logs fastapi    
+
       - name: Tear Down Docker Compose Stack
         run: |
           docker-compose down
