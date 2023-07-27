@@ -24,6 +24,10 @@ jobs:
         run: |
           curl -s -o /dev/null -w "%{http_code}" -X GET --insecure "http://localhost:9000/" && docker logs nginx && docker logs fastapi    
 
+      - name: Run smoke test
+        run: |
+          cd ./fastapi && chmod +x smoke-test.sh && ./smoke_test.sh
+ 
       - name: Tear Down Docker Compose Stack
         run: |
           docker-compose down
