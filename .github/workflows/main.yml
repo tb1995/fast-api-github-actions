@@ -1,0 +1,28 @@
+name: Test fastapi and nginx smoke tests
+
+on: 
+  push:
+    branches:
+      - main
+    paths:
+      - "./fastapi/*"
+      - "./nginx/*"
+  
+jobs: 
+  docker:
+    name: Docker FastAPI
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+      - name: Run the docker-compose stack
+        run: |
+         docker compose up -d && sleep 2 && docker ps
+         
+      - name: Tear Down Docker Compose Stack
+        run: |
+          docker compose down
+         
+         
+
+  
